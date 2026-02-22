@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FileText, FileCode, Zap, Shield, MousePointer2 } from 'lucide-react';
+import { FileText, FileCode, Zap, Shield, MousePointer2, ArrowRight } from 'lucide-react';
 
 export default function Home() {
   const tools = [
@@ -27,8 +27,8 @@ export default function Home() {
   ];
 
   return (
-    <main>
-      {/* Hero Section */}
+    <main className="bg-white">
+      {/* 1. Hero Section */}
       <section className="py-20 bg-gradient-to-b from-white to-gray-50 text-center px-4">
         <h1 className="text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">
           Solusi Dokumen <span className="text-blue-600">Tercepat</span>
@@ -43,7 +43,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Grid Tools */}
+      {/* 2. Grid Tools */}
       <section className="max-w-6xl mx-auto py-16 px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {tools.map((tool, index) => (
@@ -63,7 +63,45 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Keunggulan */}
+      {/* 3. Section Blog (SANGAT PENTING UNTUK ADSENSE) */}
+      <section className="max-w-6xl mx-auto py-20 px-4 border-t border-gray-100">
+        <div className="flex justify-between items-center mb-10">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Tips & Tutorial</h2>
+            <p className="text-gray-500">Panduan lengkap mengelola dokumen digital Anda.</p>
+          </div>
+          <Link href="/blog" className="hidden md:flex items-center text-blue-600 font-bold hover:underline">
+            Lihat Semua Artikel <ArrowRight className="ml-2 w-4 h-4" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Artikel 1 */}
+          <Link href="/blog/cara-mengubah-pdf-ke-word-tanpa-berantakan" className="group">
+            <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all">
+              <div className="h-48 bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                <FileText className="w-16 h-16 text-blue-300" />
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-bold mb-3 group-hover:text-blue-600 transition-colors leading-snug">
+                  Cara Mengubah PDF ke Word Tanpa Berantakan di Pieswap.my.id
+                </h3>
+                <p className="text-gray-500 text-sm line-clamp-2 mb-4">
+                  Solusi cepat bagi mahasiswa dan pekerja yang sering mengalami masalah layout berantakan saat konversi PDF.
+                </p>
+                <span className="text-xs font-bold text-blue-600 uppercase tracking-wider italic">Oleh Ravid El Aziz</span>
+              </div>
+            </div>
+          </Link>
+
+          {/* Slot Kosong untuk Artikel Selanjutnya */}
+          <div className="bg-gray-50 rounded-2xl border border-dashed border-gray-200 flex items-center justify-center p-8 text-center">
+            <p className="text-gray-400 text-sm">Artikel selanjutnya sedang ditulis...</p>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Keunggulan (Warna Biru) */}
       <section className="bg-blue-600 py-16 text-white text-center">
         <div className="max-w-4xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="flex flex-col items-center">
@@ -82,4 +120,4 @@ export default function Home() {
   );
 }
 
-// Tes perubahan 
+// Tes perubahan untuk Ola agar Git mendeteksi modifikasi file ini
