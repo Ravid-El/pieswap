@@ -45,8 +45,8 @@ const handleConvert = async () => {
   return (
     <main className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-3xl mx-auto text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">PDF ke Word</h1>
-        <p className="text-gray-600 mb-8">Ubah dokumen PDF Anda menjadi Word (.docx) yang bisa diedit.</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Word ke PDF</h1>
+        <p className="text-gray-600 mb-8">Ubah dokumen Word Anda menjadi PDF (.pdf) yang bisa diedit.</p>
 
         {/* Kotak Upload */}
         <div 
@@ -93,7 +93,7 @@ const handleConvert = async () => {
               target="_blank"
               className="bg-green-600 text-white px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-green-700 transition"
             >
-              <Download /> Download Word (.docx)
+              <Download /> Download PDF (.pdf)
             </a>
             <button onClick={() => {setFile(null); setDownloadUrl(null);}} className="mt-4 text-sm text-gray-500 underline">Konversi File Lain</button>
           </div>
