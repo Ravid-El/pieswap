@@ -1,19 +1,31 @@
 import { NextResponse } from 'next/server';
 import CloudConvert from 'cloudconvert';
 
-// Inisialisasi CloudConvert dengan API Key dari .env
-const cloudConvert = new CloudConvert(process.env.CLOUDCONVERT_API_KEY!);
-
 export async function POST(req: Request) {
+  // 1. Cek Kunci API sebelum mulai (Keamanan & Debugging)
+  const apiKey = process.env.CLOUDCONVERT_API_KEY;
+  
+  if (!apiKey) {
+    console.error("ERROR: CLOUDCONVERT_API_KEY tidak ditemukan di Environment Variables.");
+    return NextResponse.json(
+      { error: 'Konfigurasi server belum lengkap (API Key hilang).' }, 
+      { status: 500 }
+    );
+  }
+
+  // Inisialisasi di dalam fungsi untuk memastikan kunci terbaru terbaca
+  const cloudConvert = new CloudConvert(apiKey);
+
   try {
     const formData = await req.formData();
     const file = formData.get('file') as File;
 
     if (!file) {
-      return NextResponse.json({ error: 'File tidak ditemukan' }, { status: 400 });
+      return NextResponse.json({ error: 'Tidak ada file yang dipilih.' }, { status: 400 });
     }
 
-    // 1. Mulai Job Konversi (Contoh: PDF ke Word)
+    // 2. Buat Job Konversi
+    // Kita pakai mode 'docx' karena ini untuk tool PDF ke Word
     const job = await cloudConvert.jobs.create({
       tasks: {
         'import-file': {
@@ -22,7 +34,7 @@ export async function POST(req: Request) {
         'convert-file': {
           operation: 'convert',
           input: 'import-file',
-          output_format: 'docx', // Nanti bisa kita bikin dinamis
+          output_format: 'docx', 
         },
         'export-file': {
           operation: 'export/url',
@@ -31,24 +43,51 @@ export async function POST(req: Request) {
       },
     });
 
-    // 2. Upload file ke CloudConvert
+    // 3. Upload file ke CloudConvert
     const uploadTask = job.tasks.find((task) => task.name === 'import-file');
     
-    // Kita butuh buffer untuk upload
+    if (!uploadTask) {
+      throw new Error("Gagal membuat tugas upload.");
+    }
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    await cloudConvert.tasks.upload(uploadTask!, buffer, file.name);
+    // Kirim file ke CloudConvert
+    await cloudConvert.tasks.upload(uploadTask, buffer, file.name);
 
-    // 3. Tunggu sampai konversi selesai (polling)
+    // 4. Tunggu proses konversi (Bisa memakan waktu beberapa detik)
     const finishedJob = await cloudConvert.jobs.wait(job.id);
+    
+    // Ambil hasil export
     const exportTask = finishedJob.tasks.find((task) => task.name === 'export-file');
+    
+    if (exportTask?.status === 'error') {
+      throw new Error("CloudConvert gagal memproses file Anda.");
+    }
+
     const downloadUrl = exportTask?.result?.files?.[0]?.url;
+
+    if (!downloadUrl) {
+      throw new Error("Link download tidak ditemukan.");
+    }
 
     return NextResponse.json({ url: downloadUrl });
 
   } catch (error: any) {
-    console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("DETAIL ERROR:", error);
+
+    // Jika error berasal dari CloudConvert (biasanya Unauthorized)
+    if (error.message.includes('401') || error.message.includes('Unauthorized')) {
+      return NextResponse.json(
+        { error: 'Kunci API CloudConvert tidak valid atau tidak diizinkan.' }, 
+        { status: 401 }
+      );
+    }
+
+    return NextResponse.json(
+      { error: 'Terjadi kesalahan: ' + error.message }, 
+      { status: 500 }
+    );
   }
 }
