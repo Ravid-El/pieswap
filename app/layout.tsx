@@ -94,7 +94,7 @@ export default function RootLayout({
                 © {new Date().getFullYear()} PIESWAP — SALATIGA, ID
               </p>
               <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">
-                DESIGNED BY RAVID EL AZIZ
+                DESIGNED BY RAVID EL
               </p>
             </div>
           </div>
