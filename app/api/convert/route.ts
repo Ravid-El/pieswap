@@ -1,92 +1,71 @@
 import { NextResponse } from 'next/server';
 import CloudConvert from 'cloudconvert';
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // Limit 10MB
+
 export async function POST(req: Request) {
-  // 1. Cek Kunci API sebelum mulai (Keamanan & Debugging)
   const apiKey = process.env.CLOUDCONVERT_API_KEY;
   
   if (!apiKey) {
-    console.error("ERROR: CLOUDCONVERT_API_KEY tidak ditemukan di Environment Variables.");
-    return NextResponse.json(
-      { error: 'Konfigurasi server belum lengkap (API Key hilang).' }, 
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'API Key belum dikonfigurasi di Vercel.' }, { status: 500 });
   }
 
-  // Inisialisasi di dalam fungsi untuk memastikan kunci terbaru terbaca
   const cloudConvert = new CloudConvert(apiKey);
 
   try {
     const formData = await req.formData();
     const file = formData.get('file') as File;
+    // Ambil target format dari frontend (contoh: 'docx', 'pdf')
+    const targetFormat = formData.get('targetFormat') as string || 'docx';
 
+    // Validasi 1: Cek apakah file ada
     if (!file) {
-      return NextResponse.json({ error: 'Tidak ada file yang dipilih.' }, { status: 400 });
+      return NextResponse.json({ error: 'Tidak ada file yang diunggah.' }, { status: 400 });
     }
 
-    // 2. Buat Job Konversi
-    // Kita pakai mode 'docx' karena ini untuk tool PDF ke Word
+    // Validasi 2: Cek ukuran file (Max 10MB)
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json({ error: 'File terlalu besar. Maksimal 10MB.' }, { status: 400 });
+    }
+
+    // 1. Buat Job Konversi Dinamis
     const job = await cloudConvert.jobs.create({
       tasks: {
-        'import-file': {
-          operation: 'import/upload',
-        },
+        'import-file': { operation: 'import/upload' },
         'convert-file': {
           operation: 'convert',
           input: 'import-file',
-          output_format: 'docx', 
+          output_format: targetFormat,
         },
-        'export-file': {
-          operation: 'export/url',
+        'export-file': { 
+          operation: 'export/url', 
           input: 'convert-file',
+          // File di CloudConvert akan otomatis terhapus setelah diproses
         },
       },
     });
 
-    // 3. Upload file ke CloudConvert
-    const uploadTask = job.tasks.find((task) => task.name === 'import-file');
-    
-    if (!uploadTask) {
-      throw new Error("Gagal membuat tugas upload.");
-    }
-
+    // 2. Upload File
+    const uploadTask = job.tasks.find((t) => t.name === 'import-file');
     const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    await cloudConvert.tasks.upload(uploadTask!, Buffer.from(bytes), file.name);
 
-    // Kirim file ke CloudConvert
-    await cloudConvert.tasks.upload(uploadTask, buffer, file.name);
-
-    // 4. Tunggu proses konversi (Bisa memakan waktu beberapa detik)
+    // 3. Tunggu hingga selesai
     const finishedJob = await cloudConvert.jobs.wait(job.id);
-    
-    // Ambil hasil export
-    const exportTask = finishedJob.tasks.find((task) => task.name === 'export-file');
-    
+    const exportTask = finishedJob.tasks.find((t) => t.name === 'export-file');
+
     if (exportTask?.status === 'error') {
-      throw new Error("CloudConvert gagal memproses file Anda.");
+      throw new Error("Gagal memproses file. Pastikan format PDF benar.");
     }
 
     const downloadUrl = exportTask?.result?.files?.[0]?.url;
 
-    if (!downloadUrl) {
-      throw new Error("Link download tidak ditemukan.");
-    }
-
     return NextResponse.json({ url: downloadUrl });
 
   } catch (error: any) {
-    console.error("DETAIL ERROR:", error);
-
-    // Jika error berasal dari CloudConvert (biasanya Unauthorized)
-    if (error.message.includes('401') || error.message.includes('Unauthorized')) {
-      return NextResponse.json(
-        { error: 'Kunci API CloudConvert tidak valid atau tidak diizinkan.' }, 
-        { status: 401 }
-      );
-    }
-
+    console.error("DEBUG ERROR:", error.message);
     return NextResponse.json(
-      { error: 'Terjadi kesalahan: ' + error.message }, 
+      { error: 'Terjadi kesalahan: ' + (error.message.includes('401') ? 'API Key Tidak Valid' : error.message) }, 
       { status: 500 }
     );
   }

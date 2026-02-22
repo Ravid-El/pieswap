@@ -15,32 +15,33 @@ export default function PdfToWord() {
     onDrop: (acceptedFiles) => setFile(acceptedFiles[0]),
   });
 
-  const handleConvert = async () => {
-    if (!file) return;
-    setLoading(true);
-    setDownloadUrl(null);
+const handleConvert = async () => {
+  if (!file) return;
+  setLoading(true);
+  setDownloadUrl(null);
 
-    const formData = new FormData();
-    formData.append("file", file);
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("targetFormat", "docx"); // <--- Kita beri tahu API untuk mengubah ke DOCX
 
-    try {
-      const response = await fetch("/api/convert", {
-        method: "POST",
-        body: formData,
-      });
+  try {
+    const response = await fetch("/api/convert", {
+      method: "POST",
+      body: formData,
+    });
 
-      const data = await response.json();
-      if (data.url) {
-        setDownloadUrl(data.url);
-      } else {
-        alert("Gagal konversi: " + data.error);
-      }
-    } catch (error) {
-      alert("Terjadi kesalahan teknis.");
-    } finally {
-      setLoading(false);
+    const data = await response.json();
+    if (response.ok && data.url) {
+      setDownloadUrl(data.url);
+    } else {
+      alert("Error: " + data.error);
     }
-  };
+  } catch (error) {
+    alert("Gagal menghubungi server.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <main className="min-h-screen bg-gray-50 py-12 px-4">
