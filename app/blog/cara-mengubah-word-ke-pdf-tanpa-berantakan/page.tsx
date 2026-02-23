@@ -1,12 +1,49 @@
 import Link from 'next/link';
 import { ArrowLeft, User, FileCheck, ShieldCheck, Sparkles } from 'lucide-react';
 
+// --- WILAYAH 1: METADATA SPESIFIK WORD KE PDF ---
+// Google menggunakan ini untuk membedakan isi artikel lo di hasil pencarian.
+export const metadata = {
+  title: "Cara Mengubah Word ke PDF Tanpa Berantakan (Presisi Tinggi) | Pieswap",
+  description: "Tutorial lengkap menjaga margin, font, dan posisi gambar saat konversi Word ke PDF agar hasil tetap profesional dan rapi.",
+  keywords: ["Word ke PDF", "Konversi Word", "Pieswap", "Tutorial Dokumen", "Dokumen Digital Salatiga"],
+};
+
 export default function WordToPdfArticle() {
   return (
     <main className="min-h-screen bg-[#F8FAFC] pt-24 md:pt-32 pb-20 px-6">
+      
+      {/* --- WILAYAH 2: JSON-LD SPESIFIK TUTORIAL --- */}
+      {/* Ini membantu Google menampilkan 'Rich Snippets' di hasil pencarian. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            "headline": "Cara Mengubah Word ke PDF Tanpa Berantakan",
+            "author": {
+              "@type": "Person",
+              "name": "Ravid El Aziz",
+              "url": "https://pieswap.my.id/about"
+            },
+            "datePublished": "2026-02-20",
+            "description": "Panduan teknis menjaga integritas tata letak dokumen saat mengubah format Word ke PDF.",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Pieswap",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://pieswap.my.id/icon.png"
+              }
+            }
+          }),
+        }}
+      />
+
       <div className="max-w-4xl mx-auto">
         <Link href="/blog" className="inline-flex items-center text-[10px] font-black uppercase tracking-[0.2em] text-[#2563EB] mb-8 md:mb-12 hover:translate-x-[-4px] transition-transform">
-          <ArrowLeft className="w-3 h-3 mr-2" /> Back
+          <ArrowLeft className="w-3 h-3 mr-2" /> Back to Journal
         </Link>
 
         <header className="mb-12 md:mb-16">
