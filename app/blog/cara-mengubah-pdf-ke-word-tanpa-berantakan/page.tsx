@@ -1,9 +1,46 @@
 import Link from 'next/link';
 import { ArrowLeft, Clock, Calendar, User, Share2, FileCheck, ShieldCheck, Zap, Sparkles } from 'lucide-react';
 
+// --- WILAYAH 1: METADATA (DI LUAR FUNCTION) ---
+// Google baca bagian ini buat nentuin judul di hasil pencarian.
+export const metadata = {
+  title: "Cara Mengubah PDF ke Word Tanpa Berantakan (100% Presisi) | Pieswap",
+  description: "Panduan lengkap cara konversi PDF ke Word agar layout, font, dan gambar tidak bergeser. Tips profesional dari Ravid El Aziz.",
+  keywords: ["PDF ke Word", "Konversi PDF", "Pieswap", "Tutorial Dokumen", "Salatiga Tech"],
+};
+
 export default function ArtikelPdfKeWord() {
   return (
     <main className="min-h-screen bg-[#F8FAFC] pt-32 pb-20 px-6">
+      
+      {/* --- WILAYAH 2: JSON-LD (DI DALAM FUNCTION, TEPAT DI BAWAH <main>) --- */}
+      {/* Ini kode 'rahasia' buat robot Google agar artikel lo dapet rating tinggi. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": "Cara Mengubah PDF ke Word Tanpa Berantakan",
+            "author": {
+              "@type": "Person",
+              "name": "Ravid El Aziz",
+              "url": "https://pieswap.my.id/about"
+            },
+            "datePublished": "2026-02-22",
+            "description": "Analisis integritas data digital dan cara konversi PDF tanpa merusak layout.",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Pieswap",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://pieswap.my.id/icon.png"
+              }
+            }
+          }),
+        }}
+      />
+
       <div className="max-w-4xl mx-auto">
         
         {/* --- BREADCRUMBS --- */}
@@ -91,7 +128,7 @@ export default function ArtikelPdfKeWord() {
           </div>
         </article>
 
-        {/* --- AUTHOR FOOTER (Dark Luxury) --- */}
+        {/* --- AUTHOR FOOTER --- */}
         <div className="bg-slate-900 rounded-[48px] p-10 md:p-12 text-white flex flex-col md:flex-row items-center gap-10">
           <div className="w-24 h-24 bg-white/10 rounded-full flex-shrink-0 flex items-center justify-center font-black text-2xl text-white/20">
             RA
