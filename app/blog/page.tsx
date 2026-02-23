@@ -1,18 +1,18 @@
-import Link from 'next/link';
-import { FileText, ArrowRight, Calendar, User, Search, Sparkles, Clock } from 'lucide-react';
+"use client";
 
-// SEO Metadata biar AdSense & Google seneng
-export const metadata = {
-  title: "The Journal - Pieswap Insights",
-  description: "Arsip pemikiran, tutorial, dan analisis teknis mengenai manajemen dokumen digital oleh Ravid El Aziz.",
-};
+import { useState } from 'react';
+import Link from 'next/link';
+import { FileText, ArrowRight, Calendar, User, Search, Sparkles, Clock, Loader2, CheckCircle2 } from 'lucide-react';
 
 export default function BlogArchive() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
   const posts = [
     {
       id: "cara-mengubah-pdf-ke-word-tanpa-berantakan", 
       category: "Analysis / 001",
-      title: "Seni Konversi Dokumen Tanpa Merusak Struktur Layout.",
+      title: "Cara Mengubah PDF ke Word Tanpa Berantakan.",
       excerpt: "Analisis mendalam mengenai integritas data digital dan cara menjaga estetika dokumen tetap utuh di era kecepatan tinggi.",
       date: "22 Februari 2026",
       author: "Ravid El Aziz",
@@ -27,7 +27,6 @@ export default function BlogArchive() {
       author: "Ravid El Aziz",
       readTime: "3 min read"
     },
-    // --- ARTIKEL KETIGA (BARU) ---
     {
       id: "mengapa-kompres-pdf-penting",
       category: "Insight / 003",
@@ -38,6 +37,32 @@ export default function BlogArchive() {
       readTime: "4 min read"
     }
   ];
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+
+    try {
+      // GANTI "your_formspree_id" dengan ID yang lo dapet dari Formspree tadi
+      const res = await fetch("https://formspree.io/f/mnjbopog", {
+        method: "POST",
+        body: JSON.stringify({ email: email }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        setEmail("");
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      setStatus("error");
+    }
+  };
 
   return (
     <main className="min-h-screen bg-[#F8FAFC] pt-40 pb-20 px-6">
@@ -109,24 +134,42 @@ export default function BlogArchive() {
           ))}
         </div>
 
-        {/* --- NEWSLETTER SECTION --- */}
+        {/* --- NEWSLETTER SECTION (FIXED) --- */}
         <div className="mt-40 bg-slate-900 rounded-[56px] p-16 text-center relative overflow-hidden">
           <div className="relative z-10 text-white">
             <h2 className="text-4xl font-bold mb-4 tracking-tight uppercase">Join the Insights<span className="text-[#2563EB]">.</span></h2>
             <p className="text-slate-400 mb-10 max-w-sm mx-auto text-sm font-medium">
               Dapatkan tutorial dokumen terbaru langsung di inbox Anda.
             </p>
-            <form className="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
-              <input 
-                type="email" 
-                required
-                placeholder="email@anda.com" 
-                className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white text-sm outline-none focus:border-[#2563EB] transition-all"
-              />
-              <button className="bg-[#2563EB] text-white px-10 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-[#38BDF8] transition-all shadow-xl shadow-blue-500/20">
-                Subscribe
-              </button>
-            </form>
+
+            {status === "success" ? (
+              <div className="flex items-center justify-center gap-2 text-[#10B981] font-bold uppercase text-[10px] tracking-widest bg-emerald-500/10 py-6 rounded-3xl border border-emerald-500/20 max-w-md mx-auto animate-in zoom-in-95 duration-300">
+                <CheckCircle2 className="w-5 h-5" /> Berhasil Berlangganan!
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
+                <input 
+                  type="email" 
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="email@anda.com" 
+                  className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white text-sm outline-none focus:border-[#2563EB] transition-all"
+                />
+                <button 
+                  disabled={status === "loading"}
+                  className="bg-[#2563EB] text-white px-10 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-[#38BDF8] transition-all shadow-xl shadow-blue-500/20 disabled:opacity-50 flex items-center justify-center min-w-[140px]"
+                >
+                  {status === "loading" ? <Loader2 className="w-4 h-4 animate-spin" /> : "Subscribe"}
+                </button>
+              </form>
+            )}
+            
+            {status === "error" && (
+              <p className="text-red-400 text-[9px] mt-4 uppercase font-black tracking-widest">
+                Waduh gagal, coba lagi nanti Vid!
+              </p>
+            )}
           </div>
           <FileText className="absolute -bottom-10 -left-10 w-64 h-64 text-white/5 -rotate-12" />
         </div>

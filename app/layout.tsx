@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
-import { Command } from "lucide-react";
+import { Command, Heart } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pieswap.my.id - Modern Document Engine",
+  title: "Pieswap.web.id - Modern Document Engine",
   description: "Konversi PDF gratis dengan standar kualitas profesional.",
 };
 
@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#F8FAFC] text-slate-900`}>
-        {/* --- NAVBAR MODERN --- */}
+        {/* --- NAVBAR MODERN (Tetap sesuai kode lo) --- */}
         <nav className="bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50 h-16 flex items-center">
           <div className="max-w-6xl mx-auto px-6 w-full flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2 group">
@@ -44,7 +44,6 @@ export default function RootLayout({
               <Link href="/blog" className="text-[#2563EB] hover:text-[#38BDF8] transition-colors">The Journal</Link>
             </div>
 
-            {/* Mobile Journal Link */}
             <Link href="/blog" className="md:hidden text-[10px] font-black uppercase tracking-widest text-[#2563EB]">
               Journal
             </Link>
@@ -55,47 +54,57 @@ export default function RootLayout({
           {children}
         </div>
 
-        <footer className="bg-white border-t border-slate-100 pt-16 pb-8 mt-20">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 text-center md:text-left">
-              <div>
-                <h3 className="font-bold mb-4 text-[#2563EB]">Pieswap.</h3>
-                <p className="text-sm text-slate-400 leading-relaxed mb-6">
-                  Solusi konversi dokumen digital yang dikembangkan untuk kecepatan, akurasi, dan privasi total.
+        {/* --- FOOTER LUXURY (Gue poles dikit biar makin pro) --- */}
+        <footer className="bg-white border-t border-slate-100 pt-24 pb-12 mt-20 px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20 text-center md:text-left">
+              
+              {/* Kolom 1: Branding & About */}
+              <div className="col-span-1 md:col-span-2">
+                <h3 className="text-xl font-black text-slate-900 tracking-tighter uppercase mb-6">Pieswap<span className="text-[#2563EB]">.</span></h3>
+                <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-xs mx-auto md:mx-0 mb-8">
+                  Solusi konversi dokumen digital yang dikembangkan untuk kecepatan, akurasi, dan privasi total dari Salatiga.
                 </p>
-                <Link href="/about" className="text-[10px] font-black uppercase tracking-widest text-[#2563EB] hover:underline">
+                <Link href="/about" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#2563EB] hover:text-[#38BDF8] transition-colors">
                   About the Project →
                 </Link>
               </div>
 
+              {/* Kolom 2: Alat Utama */}
               <div>
-                <h3 className="font-bold mb-4 text-slate-900">Alat Utama</h3>
-                <ul className="text-sm text-slate-400 space-y-3">
-                  <li><Link href="/pdf-ke-word" className="hover:text-[#2563EB]">PDF ke Word</Link></li>
-                  <li><Link href="/word-ke-pdf" className="hover:text-[#2563EB]">Word ke PDF</Link></li>
-                  <li><Link href="/kompres-pdf" className="hover:text-[#2563EB]">Kompres PDF</Link></li>
+                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-900 mb-8">Alat Utama</h4>
+                <ul className="text-sm font-medium text-slate-400 space-y-4">
+                  <li><Link href="/pdf-ke-word" className="hover:text-[#2563EB] transition-colors">PDF ke Word</Link></li>
+                  <li><Link href="/word-ke-pdf" className="hover:text-[#2563EB] transition-colors">Word ke PDF</Link></li>
+                  <li><Link href="/kompres-pdf" className="hover:text-[#2563EB] transition-colors">Kompres PDF</Link></li>
                 </ul>
               </div>
 
+              {/* Kolom 3: Support & Legal */}
               <div>
-                <h3 className="font-bold mb-4 text-slate-900">Informasi & Hukum</h3>
-                <ul className="text-sm text-slate-400 space-y-3">
-                  <li><Link href="/blog" className="hover:text-[#2563EB]">Jurnal & Blog</Link></li>
-                  <li><Link href="/faq" className="hover:text-[#2563EB]">FAQ</Link></li>
-                  <li><Link href="/privacy-policy" className="hover:text-[#2563EB]">Privacy Policy</Link></li>
-                  <li><Link href="/terms-and-conditions" className="hover:text-[#2563EB]">Terms & Conditions</Link></li>
-                  <li><Link href="/contact" className="hover:text-[#2563EB]">Contact Support</Link></li>
+                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-900 mb-8">Informasi</h4>
+                <ul className="text-sm font-medium text-slate-400 space-y-4">
+                  <li><Link href="/blog" className="hover:text-[#2563EB] transition-colors">The Journal</Link></li>
+                  <li><Link href="/faq" className="hover:text-[#2563EB] transition-colors">FAQ</Link></li>
+                  <li><Link href="/contact" className="hover:text-[#2563EB] transition-colors">Contact Support</Link></li>
+                  <li><Link href="/privacy-policy" className="hover:text-[#2563EB] transition-colors">Privacy Policy</Link></li>
+                  <li><Link href="/terms-and-conditions" className="hover:text-[#2563EB] transition-colors">Terms & Conditions</Link></li>
                 </ul>
               </div>
             </div>
 
-            <div className="border-t border-slate-50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center">
-              <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">
-                © {new Date().getFullYear()} PIESWAP — SALATIGA, ID
-              </p>
-              <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">
-                DESIGNED BY RAVID EL
-              </p>
+            {/* Bottom Bar */}
+            <div className="border-t border-slate-50 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
+              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-slate-300">
+                <span>© {new Date().getFullYear()} PIESWAP</span>
+                <span className="hidden md:inline">—</span>
+                <span className="flex items-center gap-1.5">
+                  BUILT WITH <Heart className="w-3 h-3 text-red-400 fill-current" /> BY RAVID EL IN SALATIGA
+                </span>
+              </div>
+              <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-300">
+                <span>All Rights Reserved</span>
+              </div>
             </div>
           </div>
         </footer>

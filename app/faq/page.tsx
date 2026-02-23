@@ -1,12 +1,11 @@
 import { HelpCircle, ShieldCheck, Zap, Lock, ArrowLeft, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 
-// --- WILAYAH 1: METADATA (DI LUAR FUNCTION) ---
-// Biar halaman FAQ lo muncul cakep di Google
+// --- WILAYAH 1: METADATA ---
 export const metadata = {
-  title: "FAQ - Pertanyaan Umum & Bantuan | Pieswap",
-  description: "Temukan jawaban lengkap mengenai keamanan data, cara penggunaan, dan format file yang didukung oleh layanan konversi Pieswap.",
-  keywords: ["FAQ Pieswap", "Bantuan PDF", "Keamanan Data", "Konversi Dokumen Gratis", "Salatiga Tech"],
+  title: "FAQ - Pusat Bantuan & Pertanyaan Umum | Pieswap",
+  description: "Temukan jawaban lengkap mengenai limit file, keamanan data, dan cara penggunaan layanan konversi dokumen Pieswap secara gratis.",
+  keywords: ["FAQ Pieswap", "Bantuan PDF", "Limit File Pieswap", "Konversi Dokumen Salatiga"],
 };
 
 export default function FAQPage() {
@@ -22,6 +21,26 @@ export default function FAQPage() {
     {
       q: "Format apa saja yang didukung?",
       a: "Saat ini kami mendukung PDF ke Word, Word ke PDF, dan Kompresi PDF dengan teknologi cloud terbaru."
+    },
+    {
+      q: "Apakah ada batasan ukuran file?",
+      a: "Untuk menjaga kecepatan proses, saat ini kami mendukung unggahan file hingga maksimal 10MB per dokumen."
+    },
+    {
+      q: "Apakah saya perlu membuat akun?",
+      a: "Tidak perlu. Anda bisa langsung menggunakan semua alat kami tanpa harus mendaftar atau memberikan informasi pribadi apa pun."
+    },
+    {
+      q: "Mengapa hasil konversi saya berantakan?",
+      a: "Biasanya ini terjadi jika file PDF Anda berasal dari hasil scan gambar. Pastikan PDF Anda berisi lapisan teks digital untuk hasil 100% presisi."
+    },
+    {
+      q: "Berapa lama proses konversi berlangsung?",
+      a: "Berkat teknologi cloud kami, sebagian besar dokumen selesai diproses hanya dalam hitungan detik tergantung ukuran file."
+    },
+    {
+      q: "Apakah Pieswap bisa diakses melalui HP?",
+      a: "Tentu saja. Pieswap dirancang sepenuhnya responsif sehingga nyaman digunakan di smartphone maupun tablet."
     }
   ];
 
@@ -29,7 +48,6 @@ export default function FAQPage() {
     <main className="min-h-screen bg-[#F8FAFC] pt-24 md:pt-32 pb-20 px-6">
       
       {/* --- WILAYAH 2: FAQ SCHEMA (JSON-LD) --- */}
-      {/* Ini fitur 'Rich Snippets' biar pertanyaan lo muncul langsung di hasil Google */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -78,14 +96,14 @@ export default function FAQPage() {
           ))}
         </div>
 
+        {/* --- TOMBOL HUBUNGI KAMI (FIXED LINK) --- */}
         <div className="bg-slate-900 rounded-[32px] md:rounded-[48px] p-8 md:p-16 text-center text-white relative overflow-hidden">
           <div className="relative z-10">
             <h2 className="text-xl md:text-2xl font-bold mb-6 uppercase tracking-tight">Masih bingung?</h2>
-            <Link href="/about" className="inline-flex items-center bg-[#10B981] text-white px-8 py-4 rounded-xl font-black text-[9px] uppercase tracking-widest hover:bg-[#059669] transition-all shadow-xl shadow-emerald-500/20">
+            <Link href="/contact" className="inline-flex items-center bg-[#10B981] text-white px-8 py-4 rounded-xl font-black text-[9px] uppercase tracking-widest hover:bg-[#059669] transition-all shadow-xl shadow-emerald-500/20">
               <MessageCircle className="w-3.5 h-3.5 mr-2" /> Hubungi Kami
             </Link>
           </div>
-          {/* Dekorasi visual tipis-tipis */}
           <Zap className="absolute -bottom-10 -right-10 w-48 h-48 text-white/5 -rotate-12" />
         </div>
       </div>
