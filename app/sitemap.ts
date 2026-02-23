@@ -12,5 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/kompres-pdf`, lastModified: new Date() },
     { url: `${baseUrl}/blog/cara-mengubah-pdf-ke-word-tanpa-berantakan`, lastModified: new Date() },
     { url: `${baseUrl}/blog/cara-mengubah-word-ke-pdf-tanpa-berantakan`, lastModified: new Date() },
+    { url: `${baseUrl}/blog/mengapa-kompres-pdf-penting`, lastModified: new Date() },
   ]
 }

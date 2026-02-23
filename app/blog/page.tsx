@@ -26,6 +26,16 @@ export default function BlogArchive() {
       date: "20 Februari 2026",
       author: "Ravid El Aziz",
       readTime: "3 min read"
+    },
+    // --- ARTIKEL KETIGA (BARU) ---
+    {
+      id: "mengapa-kompres-pdf-penting",
+      category: "Insight / 003",
+      title: "Kompresi Cerdas: Mengapa Ukuran File Berarti.",
+      excerpt: "Analisis mengenai pentingnya kompresi dokumen PDF dalam manajemen data modern untuk efisiensi penyimpanan dan pengiriman.",
+      date: "23 Februari 2026",
+      author: "Ravid El Aziz",
+      readTime: "4 min read"
     }
   ];
 
@@ -63,7 +73,6 @@ export default function BlogArchive() {
           {posts.map((post, index) => (
             <Link key={index} href={`/blog/${post.id}`} className="group">
               <div className="bg-white p-10 rounded-[48px] border border-slate-100 shadow-sm hover:shadow-2xl hover:border-[#2563EB]/10 transition-all duration-700 h-full flex flex-col relative overflow-hidden">
-                {/* Visual Decoration */}
                 <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-100 transition-opacity">
                    <ArrowRight className="w-6 h-6 text-[#2563EB] -rotate-45" />
                 </div>

@@ -58,7 +58,9 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
+        {/* Grid Artikel - Diubah ke 3 kolom untuk menampung artikel baru */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10">
+          {/* ARTIKEL 1 */}
           <Link href="/blog/cara-mengubah-pdf-ke-word-tanpa-berantakan" className="group block">
             <div className="bg-white p-8 md:p-10 rounded-[32px] md:rounded-[48px] border border-slate-100 hover:border-[#2563EB]/20 transition-all flex flex-col h-full shadow-sm hover:shadow-md">
               <span className="text-[#2563EB] text-[9px] font-black tracking-[0.3em] uppercase mb-6 block">Analysis / 001</span>
@@ -70,6 +72,7 @@ export default function Home() {
             </div>
           </Link>
 
+          {/* ARTIKEL 2 */}
           <Link href="/blog/cara-mengubah-word-ke-pdf-tanpa-berantakan" className="group block">
             <div className="bg-white p-8 md:p-10 rounded-[32px] md:rounded-[48px] border border-slate-100 hover:border-[#2563EB]/20 transition-all flex flex-col h-full shadow-sm hover:shadow-md">
               <span className="text-[#2563EB] text-[9px] font-black tracking-[0.3em] uppercase mb-6 block">Tutorial / 002</span>
@@ -77,6 +80,18 @@ export default function Home() {
                 Cara Mengubah Word ke PDF Tanpa Berantakan.
               </h3>
               <p className="text-slate-400 text-sm font-medium mb-10 leading-relaxed">Tips rahasia agar margin dan posisi gambar dokumen Anda tetap presisi.</p>
+              <div className="mt-auto text-[10px] font-black uppercase tracking-widest text-[#10B981]">Read More</div>
+            </div>
+          </Link>
+
+          {/* ARTIKEL 3 - BARU TAMBAH DI SINI */}
+          <Link href="/blog/mengapa-kompres-pdf-penting" className="group block">
+            <div className="bg-white p-8 md:p-10 rounded-[32px] md:rounded-[48px] border border-slate-100 hover:border-[#2563EB]/20 transition-all flex flex-col h-full shadow-sm hover:shadow-md">
+              <span className="text-[#2563EB] text-[9px] font-black tracking-[0.3em] uppercase mb-6 block">Insight / 003</span>
+              <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6 group-hover:text-[#2563EB] transition-colors leading-tight tracking-tighter uppercase">
+                Kompresi Cerdas: Mengapa Ukuran File Berarti.
+              </h3>
+              <p className="text-slate-400 text-sm font-medium mb-10 leading-relaxed">Analisis mengenai pentingnya kompresi dokumen PDF dalam manajemen data modern.</p>
               <div className="mt-auto text-[10px] font-black uppercase tracking-widest text-[#10B981]">Read More</div>
             </div>
           </Link>

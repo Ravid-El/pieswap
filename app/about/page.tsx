@@ -1,9 +1,41 @@
 import { User, Code2, Globe, Sparkles, ArrowLeft, Terminal, Coffee } from 'lucide-react';
 import Link from 'next/link';
 
+// --- WILAYAH 1: METADATA ---
+export const metadata = {
+  title: "Tentang Pengembang & Visi Pieswap | Ravid El Aziz",
+  description: "Kenali Ravid El Aziz, pengembang di balik Pieswap. Platform konversi dokumen gratis yang dibangun di Salatiga dengan fokus pada privasi pengguna.",
+  keywords: ["Ravid El Aziz", "Developer Salatiga", "Tentang Pieswap", "Fullstack Developer Indonesia"],
+};
+
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-[#F8FAFC] pt-24 md:pt-32 pb-20 px-6">
+      
+      {/* --- WILAYAH 2: SCHEMA PERSON (JSON-LD) --- */}
+      {/* Memperkuat identitas lo di mata Google sebagai entitas nyata */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Ravid El Aziz",
+            "url": "https://pieswap.my.id/about",
+            "jobTitle": "Fullstack Developer",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Salatiga",
+              "addressRegion": "Jawa Tengah",
+              "addressCountry": "ID"
+            },
+            "sameAs": [
+              "https://github.com/Ravid-El"
+            ]
+          }),
+        }}
+      />
+
       <div className="max-w-4xl mx-auto">
         
         <Link href="/" className="inline-flex items-center text-[10px] font-black uppercase tracking-[0.2em] text-[#2563EB] mb-8 md:mb-12 hover:translate-x-[-4px] transition-transform">
